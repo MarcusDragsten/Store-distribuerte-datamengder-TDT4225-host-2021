@@ -22,5 +22,4 @@ class txtRedskap:
 
 
 
-test= "kuyfiwayefwefg333"
-print(test[len(test)-3:])
+

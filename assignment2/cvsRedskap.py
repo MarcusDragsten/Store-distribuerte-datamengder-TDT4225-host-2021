@@ -6,14 +6,14 @@ class cvsRedskap:
     with open (path) as csv_file:
         firstLine =csv_file.readlines()[6]
         s= firstLine.split(",")
-        ut = s[5] +" "+ s[6]
+        ut = s[5]," ",s[6][:]
         return ut
         
   def datoSluttCSV(path):
     with open (path) as csv_file:
       finalLine =csv_file.readlines()[-1]
       s = finalLine.split(",")
-      ut= s[5]+ " " +  s[6]
+      ut= s[5]+" "+s[6]
       return ut
   
 
@@ -29,10 +29,10 @@ class cvsRedskap:
           for row in result:
                 jump +=1
                 if jump == 7:
-                  print(row)
+                  #print(row)
                   aResult +=[row[0] + row[1] + row[3] + row[5] + row[6]]   
           return aResult
-  innholdPLT("test.plt")
+  #Sprint("Til DB: ", innholdPLT("test.plt"))
           
 
 
