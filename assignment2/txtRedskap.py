@@ -14,3 +14,11 @@ class txtRedskap:
         with open(path) as txtFil:
             mode = txtFil.readlines()[i]
             return(mode[40:])
+
+    def labelAntall(path):
+            return  sum(1 for line in open(path)-1)
+
+
+
+test= "kuyfiwayefwefg333"
+print(test[len(test)-3:])
