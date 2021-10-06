@@ -1,5 +1,5 @@
 import csv
-class cvsRedskap:
+class csvRedskap:
 
 
   def datoStartCSV(path):
@@ -17,7 +17,7 @@ class cvsRedskap:
       return ut
   
 
-  def godkjentLinerCSV(path):
+  def godkjentLinjerCSV(path):
        #Printer true hvis det er 2506 eller færre linjer
       return 2506 >= sum(1 for line in open(path))
 
@@ -35,7 +35,7 @@ class cvsRedskap:
                   aResult.append(row[1])
                   aResult.append(row[3])
                   aResult.append(row[5] +" "+ row[6])
-                  print("Date", aResult[3])
+                 # print("Date", aResult[3])
           return aResult
           
 
