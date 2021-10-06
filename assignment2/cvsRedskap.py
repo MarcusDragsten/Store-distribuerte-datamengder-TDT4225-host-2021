@@ -37,7 +37,6 @@ class cvsRedskap:
                   aResult.append(row[5] +" "+ row[6])
                   print("Date", aResult[3])
           return aResult
-  print("Til DB: ", innholdPLT("test.plt"))
           
 
 
