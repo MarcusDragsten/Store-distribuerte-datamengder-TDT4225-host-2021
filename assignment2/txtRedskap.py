@@ -1,11 +1,13 @@
 class txtRedskap:
 
     def datoStartTXT(path, i):
+        i+=1
         with open(path) as txtFil:
             start = txtFil.readlines()[i]
             return(start[:19])
 
     def datoSluttTXT(path,i):
+        i+=1
         with open(path) as txtFil:
             slutt = txtFil.readlines()[i]
             return(slutt[20:39])
