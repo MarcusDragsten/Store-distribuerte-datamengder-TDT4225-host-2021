@@ -54,7 +54,8 @@ class InsertActivityandTP:
                                         """
                                 self.cursor.execute(actQuery % (activityID, userID, transportationMode, datoStartCVS, datoSluttCVS))
 
-                                # Looping through the trackpoints for each activity, and adds them to the DB
+                                # Looping through the trackpoints and add it to array
+                                # Append the IDs in a tuple and the rest of the fields from the helping function
                                 pltArr = []
                                 for tp in range(csvRedskap.csvRedskap.linjerCSV(plt_path)):
                                     pltArr.append((trackPointID, activityID) + csvRedskap.csvRedskap.innholdPLT(plt_path, tp))
@@ -63,14 +64,15 @@ class InsertActivityandTP:
                                 # Query for adding the trackpoints
                                 tpQuery = """INSERT INTO TrackPoint VALUES (%s, %s, %s, %s, %s, %s)
                                         """
+                                # Runs execute many, to instert all trackpoings from a file at once.
                                 self.cursor.executemany(tpQuery, pltArr)
                                 self.db_connection.commit()
                                 activityID+=1
 
                     # If the user-folder does not have a label, add it to the DB
-                    # Mostly the same adding method as the if-content. Might extract it as a method
+                    # Mostly the same adding method as the if-content. Might extract it as a method.
                     else:
-                        # Does the check for max 2500 lines
+                        # Only validation is that the PLT has max 2500 lines.
                         if csvRedskap.csvRedskap.godkjentLinjerCSV(plt_path):
                                 actQuery = """INSERT INTO Activity VALUES (%s, '%s', NULL, '%s', '%s')
                                         """
