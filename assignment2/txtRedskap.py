@@ -10,6 +10,10 @@ class txtRedskap:
             slutt = txtFil.readlines()[i]
             return(slutt[20:39])
 
+    def datoSluttTXT(path,i):
+        with open(path) as txtFil:
+            slutt = txtFil.readlines()[i]
+            return(slutt[20:39])
 
 
 

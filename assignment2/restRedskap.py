@@ -20,3 +20,4 @@ print(startDatoTxt)
 
 sluttDatoTxt = redTxt.txtRedskap.datoSluttTXT("labels.txt", 1)
 print(sluttDatoTxt)
+
