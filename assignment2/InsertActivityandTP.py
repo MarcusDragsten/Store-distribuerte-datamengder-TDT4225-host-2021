@@ -13,6 +13,7 @@ class InsertActivity:
 
     def insertActivity(self):
         label_path = ""
+        counterID = 1
 
         for (path, dirs, files) in os.walk("C:/Users/Yoga/dataset/Data", topdown=True):
 
@@ -22,15 +23,14 @@ class InsertActivity:
             # print(files)
 
             if path[len(path)-3:].isnumeric():
-                actId = path[len(path)-3:]
+                userID = path[len(path)-3:]
 
                 if "labels.txt" in files:
-                    print(actId)
+                    print(userID)
                     label_path = path + "/labels.txt"
                     #print(label_path)
             
             if path[len(path)-10:] == "Trajectory":
-                counterID = 1
                 for plt in files:
                     #print(files)
                     #print("Her går vi gjennom PLT-filer ---------------------------------------------------------------------------")
@@ -57,13 +57,14 @@ class InsertActivity:
                             if datoStartCVS == datoStartTXT and datoSluttCVS == datoSluttTXT and cvsRedskap.cvsRedskap.godkjentLinerCSV(plt_path):
                                 print(datoStartCVS, datoStartTXT, datoSluttCVS, datoSluttTXT)
                                 transportationMode = txtRedskap.txtRedskap.hentMode(label_path, i)
+                                print(transportationMode)
                                 
-                                actQuery = """INSERT INTO Activity VALUES ('%s', %s, %s, %s, %s)
+                                actQuery = """INSERT INTO Activity VALUES (%s, '%s', '%s', '%s', '%s')
                                        """
                                 
-                                self.cursor.execute(actQuery % (counterID, actId, transportationMode, datoStartCVS, datoSluttCVS))
-
-
+                                self.cursor.execute(actQuery % (counterID, userID, transportationMode, datoStartCVS, datoSluttCVS))
+                                counterID+=1
+                                self.db_connection.commit()
 
                 label_path = ""
 
