@@ -10,12 +10,7 @@ class txtRedskap:
             slutt = txtFil.readlines()[i]
             return(slutt[20:39])
 
-    def datoSluttTXT(path,i):
+    def hentMode(path,i):
         with open(path) as txtFil:
-            slutt = txtFil.readlines()[i]
-            return(slutt[20:39])
-
-
-
-    print(datoStartTXT("labels.txt",1) )
-    print(datoSluttTXT("labels.txt",1) )
+            mode = txtFil.readlines()[i]
+            return(mode[40:])
