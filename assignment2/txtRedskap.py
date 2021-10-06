@@ -18,7 +18,7 @@ class txtRedskap:
             return(mode[40:])
 
     def labelAntall(path):
-            return  sum(1 for line in open(path)-1)
+            return  sum(1 for line in open(path)) -1
 
 
 
