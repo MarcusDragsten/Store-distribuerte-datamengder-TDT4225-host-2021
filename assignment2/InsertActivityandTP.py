@@ -18,48 +18,28 @@ class InsertActivity:
 
         for (path, dirs, files) in os.walk("C:/Users/Yoga/dataset/Data", topdown=True):
 
-
-            # print(path)
-            # print(dirs)
-            # print(files)
-
             if path[len(path)-3:].isnumeric():
                 userID = path[len(path)-3:]
                 print(userID)
 
                 if "labels.txt" in files:
                     label_path = path + "/labels.txt"
-                    #print(label_path)
             
             if path[len(path)-10:] == "Trajectory":
                 for plt in files:
-                    
-                    #print(files)
-                    #print("Her går vi gjennom PLT-filer ---------------------------------------------------------------------------")
-                    #print(plt)
                     plt_path = path + "/" + plt
                     datoStartCVS = csvRedskap.csvRedskap.datoStartCSV(plt_path)
                     datoSluttCVS = csvRedskap.csvRedskap.datoSluttCSV(plt_path)
-                    #print("Her printer vi PLT-Pathen",plt_path)
-                    #print(plt_path)
 
                     if len(label_path) > 1:
                         labelAntall = txtRedskap.txtRedskap.labelAntall(label_path)
-                        #print(labelAntall)
-                        #print("Her går vi gjennom alle labels")
+                        
                         for i in range(labelAntall):
-                            
-                            #print("inni for", i)
                             datoStartTXT = txtRedskap.txtRedskap.datoStartTXT(label_path, i)
                             datoSluttTXT = txtRedskap.txtRedskap.datoSluttTXT(label_path, i)
-                            #print(datoStartCVS, datoStartTXT, datoSluttCVS, datoSluttTXT)
-                            # if datoStartCVS == datoStartTXT:
-                            #     print("teet")
 
                             if datoStartCVS == datoStartTXT and datoSluttCVS == datoSluttTXT and csvRedskap.csvRedskap.godkjentLinjerCSV(plt_path):
-                                print(datoStartCVS, datoStartTXT, datoSluttCVS, datoSluttTXT)
                                 transportationMode = txtRedskap.txtRedskap.hentMode(label_path, i)
-                                print(transportationMode)
                                 
                                 actQuery = """INSERT INTO Activity VALUES (%s, '%s', '%s', '%s', '%s')
                                        """
@@ -72,8 +52,6 @@ class InsertActivity:
                                         """
                                     self.cursor.execute(tpQuery % (trackPointID, activityID, innholdPLT[0], innholdPLT[1], innholdPLT[2], innholdPLT[3]))
                                     trackPointID+=1
-
-                                self.db_connection.commit()
 
                                 activityID+=1
                     
@@ -91,10 +69,9 @@ class InsertActivity:
                                     self.cursor.execute(tpQuery % (trackPointID, activityID, innholdPLT[0], innholdPLT[1], innholdPLT[2], innholdPLT[3]))
                                     trackPointID+=1
                                 activityID+=1
-                                self.db_connection.commit()
-
+                
                 label_path = ""
-
+        self.db_connection.commit()
 
 def main():
     program = None
