@@ -33,8 +33,7 @@ class cvsRedskap:
                   aResult +=[row[0] + row[1] + row[3] + row[5] + row[6]]   
           return aResult
           
-  ut= innholdPLT("test.plt")
-  print(ut)
+
 
 
 
