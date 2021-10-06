@@ -35,7 +35,6 @@ class cvsRedskap:
                   aResult.append(row[1])
                   aResult.append(row[3])
                   aResult.append(row[5] +" "+ row[6])
-                  print("Date", aResult[3])
           return aResult
           
 

@@ -65,6 +65,8 @@ class InsertActivity:
                                 actQuery = """INSERT INTO Activity VALUES (%s, '%s', '%s', '%s', '%s')
                                        """
 
+                                for tp in 
+
                                 tpQuery = """INSERT INTO TrackPoint VALUES (%s, %s, '%s', '%s', %s, '%s')
                                        """
 
