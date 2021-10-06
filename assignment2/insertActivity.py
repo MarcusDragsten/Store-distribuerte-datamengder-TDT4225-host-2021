@@ -1,16 +1,22 @@
-import cvsRedskap as red
+import cvsRedskap as redCvs
+import txtRedskap as redTxt
 
-datoStart= red.cvsRedskap.datoStart("test.plt")
+datoStart= redCvs.cvsRedskap.datoStartCSV("test.plt")
 print(datoStart)
 print(datoStart[0])
 print(datoStart[1])
 
-datoSlutt= red.cvsRedskap.datoSluttCSV("test.plt")
+datoSlutt= redCvs.cvsRedskap.datoSluttCSV("test.plt")
 print(datoSlutt)
 print(datoSlutt[0])
 print(datoSlutt[1])
 
-godkjentLiner = red.cvsRedskap.godkjentLinerCSV("test.plt")
+godkjentLiner = redCvs.cvsRedskap.godkjentLinerCSV("test.plt")
 print(godkjentLiner)
-#Fungerer :) 
 
+
+startDatoTxt = redTxt.txtRedskap.datoStartTXT("labels.txt", 1)
+print(startDatoTxt)
+
+sluttDatoTxt = redTxt.txtRedskap.datoSluttTXT("labels.txt", 1)
+print(sluttDatoTxt)

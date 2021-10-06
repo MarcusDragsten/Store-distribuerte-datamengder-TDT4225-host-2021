@@ -14,13 +14,9 @@ class cvsRedskap:
       return s[5], s[6]
   
 
-
   def godkjentLinerCSV(path):
-      linjer=0
-      for row in open(path):
-        linjer+= 1
-        #Printer true hvis det er 2506 eller færre linjer
-      return 2506 >= linjer
+       #Printer true hvis det er 2506 eller færre linjer
+      return 2506 >= sum(1 for line in open(path))
 
 
 
