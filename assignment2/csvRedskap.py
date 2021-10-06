@@ -42,7 +42,7 @@ class csvRedskap:
         with open (path) as csv_file:
           enLinje = csv_file.readlines()[i]
           s = enLinje.split(",")
-          aResult = [s[0], s[1], s[3], s[5]+" "+ s[6][:8]]
+          aResult = (s[0], s[1], s[3], s[5]+" "+ s[6][:8])
           #print(aResult)
           return aResult
 

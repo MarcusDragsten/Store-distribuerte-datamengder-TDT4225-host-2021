@@ -17,7 +17,7 @@ class InsertActivityandTP:
         activityID = 1
         trackPointID = 1
 
-        for (path, dirs, files) in os.walk("C:/Users/Simen/SkoleArbeid/Store,-distribuerte-datamengder/dataset/dataset/Data", topdown=True):
+        for (path, dirs, files) in os.walk("C:/Users/Marcus/dataset/Data", topdown=True):
     
             # Checks if the path ends with the user-number-folder > Use it as UserID
             if path[len(path)-3:].isnumeric():
@@ -55,15 +55,16 @@ class InsertActivityandTP:
                                 self.cursor.execute(actQuery % (activityID, userID, transportationMode, datoStartCVS, datoSluttCVS))
 
                                 # Looping through the trackpoints for each activity, and adds them to the DB
+                                pltArr = []
                                 for tp in range(csvRedskap.csvRedskap.linjerCSV(plt_path)):
-                                    innholdPLT = csvRedskap.csvRedskap.innholdPLT(plt_path, tp)
-
-                                    # Query for adding the trackpoints
-                                    tpQuery = """INSERT INTO TrackPoint VALUES (%s, %s, '%s', '%s', %s, '%s')
-                                            """
-                                    self.cursor.execute(tpQuery % (trackPointID, activityID, innholdPLT[0], innholdPLT[1], innholdPLT[2], innholdPLT[3]))
+                                    pltArr.append((trackPointID, activityID) + csvRedskap.csvRedskap.innholdPLT(plt_path, tp))
                                     trackPointID+=1
 
+                                # Query for adding the trackpoints
+                                tpQuery = """INSERT INTO TrackPoint VALUES (%s, %s, %s, %s, %s, %s)
+                                        """
+                                self.cursor.executemany(tpQuery, pltArr)
+                                self.db_connection.commit()
                                 activityID+=1
 
                     # If the user-folder does not have a label, add it to the DB
@@ -75,17 +76,18 @@ class InsertActivityandTP:
                                         """
                                 self.cursor.execute(actQuery % (activityID, userID, datoStartCVS, datoSluttCVS))
 
+                                pltArr2 = []
                                 for tp in range(csvRedskap.csvRedskap.linjerCSV(plt_path)):
-                                    innholdPLT = csvRedskap.csvRedskap.innholdPLT(plt_path, tp)
-
-                                    tpQuery = """INSERT INTO TrackPoint VALUES (%s, %s, '%s', '%s', %s, '%s')
-                                            """
-                                    self.cursor.execute(tpQuery % (trackPointID, activityID, innholdPLT[0], innholdPLT[1], innholdPLT[2], innholdPLT[3]))
+                                    pltArr2.append((trackPointID, activityID) + csvRedskap.csvRedskap.innholdPLT(plt_path, tp))
                                     trackPointID+=1
+
+                                tpQuery = """INSERT INTO TrackPoint VALUES (%s, %s, %s, %s, %s, %s)
+                                            """
+                                self.cursor.executemany(tpQuery, pltArr2)
+                                self.db_connection.commit()
                                 activityID+=1
                 
                 label_path = ""
-        self.db_connection.commit()
 
 def main():
     program = None
