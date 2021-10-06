@@ -13,7 +13,7 @@ class InsertActivity:
 
     def insertActivity(self):
         label_path = ""
-        counterID = 1
+        activityID = 1
         trackPointID = 1
 
         for (path, dirs, files) in os.walk("C:/Users/Yoga/dataset/Data", topdown=True):
@@ -33,10 +33,12 @@ class InsertActivity:
             
             if path[len(path)-10:] == "Trajectory":
                 for plt in files:
+                    
                     #print(files)
                     #print("Her går vi gjennom PLT-filer ---------------------------------------------------------------------------")
                     #print(plt)
                     plt_path = path + "/" + plt
+                    innholdPLT = cvsRedskap.cvsRedskap.innholdPLT(plt_path)
                     #print("Her printer vi PLT-Pathen",plt_path)
                     #print(plt_path)
 
@@ -63,14 +65,14 @@ class InsertActivity:
                                 actQuery = """INSERT INTO Activity VALUES (%s, '%s', '%s', '%s', '%s')
                                        """
 
-                                tpQuery = """INSERT INTO TrackPoint VALUES (%s, '%s', '%s', '%s', '%s', '%s', '%s')
+                                tpQuery = """INSERT INTO TrackPoint VALUES (%s, %s, '%s', '%s', %s, '%s')
                                        """
 
-                                self.cursor.execute(actQuery % (counterID, userID, transportationMode, datoStartCVS, datoSluttCVS))
-                                self.cursor.execute(tpQuery % (trackPointID, counterID, transportationMode, datoStartCVS, datoSluttCVS))
+                                self.cursor.execute(actQuery % (activityID, userID, transportationMode, datoStartCVS, datoSluttCVS))
+                                self.cursor.execute(tpQuery % (trackPointID, activityID, innholdPLT[0], innholdPLT[1], innholdPLT[2], innholdPLT[3]))
                                 self.db_connection.commit()
 
-                                counterID+=1
+                                activityID+=1
                                 trackPointID+=1
 
                 label_path = ""
