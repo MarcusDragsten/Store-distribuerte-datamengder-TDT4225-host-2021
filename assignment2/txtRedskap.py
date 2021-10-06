@@ -4,13 +4,24 @@ class txtRedskap:
         i+=1
         with open(path) as txtFil:
             start = txtFil.readlines()[i]
-            return(start[:19])
+            start= start[:19]
+            L=list(start)
+            L[4] = "-"
+            L[7] = "-"
+            nyString = ''.join(map(str, L))
+            return nyString
 
     def datoSluttTXT(path,i):
         i+=1
         with open(path) as txtFil:
             slutt = txtFil.readlines()[i]
-            return(slutt[20:39])
+            slutt = slutt[20:39]
+            L=list(slutt)
+            L[4] = "-"
+            L[7] = "-"
+            nyString = ''.join(map(str, L))
+            return nyString
+
 
     def hentMode(path,i):
         with open(path) as txtFil:
@@ -22,5 +33,4 @@ class txtRedskap:
 
 
 
-test= "kuyfiwayefwefg333"
-print(test[len(test)-3:])
+

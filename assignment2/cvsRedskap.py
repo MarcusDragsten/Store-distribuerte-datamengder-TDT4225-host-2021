@@ -29,9 +29,10 @@ class cvsRedskap:
           for row in result:
                 jump +=1
                 if jump == 7:
-                  print(row)
+                  #print(row)
                   aResult +=[row[0] + row[1] + row[3] + row[5] + row[6]]   
           return aResult
+  #Sprint("Til DB: ", innholdPLT("test.plt"))
           
 
 
