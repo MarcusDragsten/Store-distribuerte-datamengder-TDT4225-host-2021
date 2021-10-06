@@ -1,6 +1,8 @@
 from DbConnector import DbConnector
 from tabulate import tabulate
 import os
+import txtRedskap
+import cvsRedskap
 
 class InsertActivity:
 
@@ -27,8 +29,17 @@ class InsertActivity:
             if path[len(path)-10:] == "Trajectory":
                 for plt in files:
                     plt_path = path + "/" + plt
+
                     if len(label_path) > 1:
-                        
+                        labelAntall = txtRedskap.txtRedskap.labelAntall(label_path)
+                        datoStartCVS = cvsRedskap.cvsRedskap.datoStartCSV(plt_path)
+                        datoSluttCVS = cvsRedskap.cvsRedskap.datoSluttCSV(plt_path)
+
+                        for i in range(labelAntall):
+                            datoStartTXT = txtRedskap.txtRedskap.datoStartTXT(label_path, i)
+                            datoSluttTXT = txtRedskap.txtRedskap.datoSluttTXT(label_path, i)
+                            
+                            
 
 
 
