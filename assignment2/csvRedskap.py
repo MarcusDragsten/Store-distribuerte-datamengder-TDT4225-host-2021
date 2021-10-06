@@ -1,5 +1,5 @@
 import csv
-class cvsRedskap:
+class csvRedskap:
 
 
   def datoStartCSV(path):
@@ -17,25 +17,22 @@ class cvsRedskap:
       return ut
   
 
-  def godkjentLinerCSV(path):
+  def godkjentLinjerCSV(path):
        #Printer true hvis det er 2506 eller færre linjer
       return 2506 >= sum(1 for line in open(path))
+      
+  def linjerCSV(path):
+        return sum(1 for line in open(path))-6
 
-  def innholdPLT(path):
+  def innholdPLT(path, i):
+        i+=6
         with open (path) as csv_file:
-          result = csv.reader(csv_file, delimiter=",")
-          aResult = []
-          jump=0
-          for row in result:
-                jump +=1
-                if jump == 7:
-                  #print(row)
-                  aResult= []
-                  aResult.append(row[0])
-                  aResult.append(row[1])
-                  aResult.append(row[3])
-                  aResult.append(row[5] +" "+ row[6])
+          enLinje = csv_file.readlines()[i]
+          s = enLinje.split(",")
+          aResult = [s[0], s[1], s[3], s[5]+" "+ s[6][:8]]
+          #print(aResult)
           return aResult
+  #innholdPLT("test.plt", 0)    
           
 
 

@@ -1,4 +1,4 @@
-import cvsRedskap as redCvs
+import csvRedskap as redCvs
 import txtRedskap as redTxt
 
 datoStart= redCvs.cvsRedskap.datoStartCSV("test.plt")
