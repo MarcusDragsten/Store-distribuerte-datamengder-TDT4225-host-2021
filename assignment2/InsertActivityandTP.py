@@ -14,6 +14,7 @@ class InsertActivity:
     def insertActivity(self):
         label_path = ""
         counterID = 1
+        trackPointID = 1
 
         for (path, dirs, files) in os.walk("C:/Users/Yoga/dataset/Data", topdown=True):
 
@@ -61,10 +62,16 @@ class InsertActivity:
                                 
                                 actQuery = """INSERT INTO Activity VALUES (%s, '%s', '%s', '%s', '%s')
                                        """
-                                
+
+                                tpQuery = """INSERT INTO TrackPoint VALUES (%s, '%s', '%s', '%s', '%s', '%s', '%s')
+                                       """
+
                                 self.cursor.execute(actQuery % (counterID, userID, transportationMode, datoStartCVS, datoSluttCVS))
-                                counterID+=1
+                                self.cursor.execute(tpQuery % (trackPointID, counterID, transportationMode, datoStartCVS, datoSluttCVS))
                                 self.db_connection.commit()
+
+                                counterID+=1
+                                trackPointID+=1
 
                 label_path = ""
 

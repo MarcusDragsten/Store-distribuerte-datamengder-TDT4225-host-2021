@@ -38,7 +38,6 @@ class cvsRedskap:
                   aResult.append(row[6])
                   
           return aResult
-  print("Til DB: ", innholdPLT("test.plt"))
           
 
 
