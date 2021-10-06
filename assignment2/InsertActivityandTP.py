@@ -47,9 +47,10 @@ class InsertActivity:
                             print("inni for")
                             datoStartTXT = txtRedskap.txtRedskap.datoStartTXT(label_path, i)
                             datoSluttTXT = txtRedskap.txtRedskap.datoSluttTXT(label_path, i)
+                            print(datoStartCVS, datoStartTXT, datoSluttCVS, datoSluttTXT)
 
                             if datoStartCVS == datoStartTXT and datoSluttCVS == datoSluttTXT and cvsRedskap.cvsRedskap.godkjentLinerCSV(plt_path):
-                                print(datoStartCVS, datoStartTXT, datoSluttCVS, datoSluttTXT)
+                                #print(datoStartCVS, datoStartTXT, datoSluttCVS, datoSluttTXT)
                                 transportationMode = txtRedskap.txtRedskap.hentMode(label_path, i)
                                 
                                 actQuery = """INSERT INTO Activity VALUES ('%s', %s, %s, %s, %s)
