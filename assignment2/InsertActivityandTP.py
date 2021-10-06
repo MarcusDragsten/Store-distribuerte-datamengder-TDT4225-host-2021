@@ -16,7 +16,7 @@ class InsertActivity:
         activityID = 1
         trackPointID = 1
 
-        for (path, dirs, files) in os.walk("C:/Users/Yoga/dataset/Data", topdown=True):
+        for (path, dirs, files) in os.walk("C:/Users/Simen/SkoleArbeid/Store,-distribuerte-datamengder/dataset/dataset/Data", topdown=True):
 
             if path[len(path)-3:].isnumeric():
                 userID = path[len(path)-3:]
