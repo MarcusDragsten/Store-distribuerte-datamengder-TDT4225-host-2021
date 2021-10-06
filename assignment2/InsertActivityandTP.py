@@ -33,10 +33,10 @@ class InsertActivity:
                 counterID = 1
                 for plt in files:
                     #print(files)
-                    print("Her går vi gjennom PLT-filer ---------------------------------------------------------------------------")
+                    #print("Her går vi gjennom PLT-filer ---------------------------------------------------------------------------")
                     #print(plt)
                     plt_path = path + "/" + plt
-                    print("Her printer vi PLT-Pathen",plt_path)
+                    #print("Her printer vi PLT-Pathen",plt_path)
                     #print(plt_path)
 
                     if len(label_path) > 1:
@@ -44,13 +44,13 @@ class InsertActivity:
                         datoStartCVS = cvsRedskap.cvsRedskap.datoStartCSV(plt_path)
                         datoSluttCVS = cvsRedskap.cvsRedskap.datoSluttCSV(plt_path)
                         #print(labelAntall)
-                        print("Her går vi gjennom alle labels")
+                        #print("Her går vi gjennom alle labels")
                         for i in range(labelAntall):
                             
                             #print("inni for", i)
                             datoStartTXT = txtRedskap.txtRedskap.datoStartTXT(label_path, i)
                             datoSluttTXT = txtRedskap.txtRedskap.datoSluttTXT(label_path, i)
-                            print(datoStartCVS, datoStartTXT, datoSluttCVS, datoSluttTXT)
+                            #print(datoStartCVS, datoStartTXT, datoSluttCVS, datoSluttTXT)
                             # if datoStartCVS == datoStartTXT:
                             #     print("teet")
 
