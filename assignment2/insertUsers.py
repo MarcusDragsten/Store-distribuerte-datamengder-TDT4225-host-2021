@@ -1,7 +1,7 @@
 from DbConnector import DbConnector
 from tabulate import tabulate
 
-class InsertData:
+class InsertUsers:
 
     def __init__(self):
         self.connection = DbConnector()
@@ -37,7 +37,7 @@ class InsertData:
 def main():
     program = None
     try:
-        program = InsertData()
+        program = InsertUsers()
         program.insertUsers()
     except Exception as e:
         print("Error: Failed to use database:", e)
