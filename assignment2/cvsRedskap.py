@@ -30,9 +30,15 @@ class cvsRedskap:
                 jump +=1
                 if jump == 7:
                   #print(row)
-                  aResult +=[row[0] + row[1] + row[3] + row[5] + row[6]]   
+                  aResult= []
+                  aResult.append(row[0])
+                  aResult.append(row[1])
+                  aResult.append(row[3])
+                  aResult.append(row[5])
+                  aResult.append(row[6])
+                  
           return aResult
-  #Sprint("Til DB: ", innholdPLT("test.plt"))
+  print("Til DB: ", innholdPLT("test.plt"))
           
 
 
