@@ -24,6 +24,7 @@ class txtRedskap:
 
 
     def hentMode(path,i):
+        i+=1
         with open(path) as txtFil:
             mode = txtFil.readlines()[i]
             return(mode[40:len(mode)-1])
@@ -31,6 +32,6 @@ class txtRedskap:
     def labelAntall(path):
             return  sum(1 for line in open(path)) -1
 
-
+    print(hentMode("labels.txt",2))
 
 
