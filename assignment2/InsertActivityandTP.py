@@ -12,6 +12,8 @@ class InsertActivity:
         self.cursor = self.connection.cursor
 
     def insertActivity(self):
+        label_path = ""
+
         for (path, dirs, files) in os.walk("C:/Users/Yoga/dataset/Data", topdown=True):
 
             # print(path)
@@ -22,31 +24,46 @@ class InsertActivity:
                 actId = path[len(path)-3:]
 
                 if "labels.txt" in files:
-                    #print(actId)
+                    print(actId)
                     label_path = path + "/labels.txt"
-                    #print(label_path)
+                    print(label_path)
             
             if path[len(path)-10:] == "Trajectory":
+                counterID = 1
                 for plt in files:
+                    #print(plt)
                     plt_path = path + "/" + plt
+                    print(plt_path)
 
                     if len(label_path) > 1:
+                        #print("inni if")
                         labelAntall = txtRedskap.txtRedskap.labelAntall(label_path)
+                        #print("labelAntall")
                         datoStartCVS = cvsRedskap.cvsRedskap.datoStartCSV(plt_path)
                         datoSluttCVS = cvsRedskap.cvsRedskap.datoSluttCSV(plt_path)
+                        #print(labelAntall)
 
                         for i in range(labelAntall):
+                            print("inni for")
                             datoStartTXT = txtRedskap.txtRedskap.datoStartTXT(label_path, i)
                             datoSluttTXT = txtRedskap.txtRedskap.datoSluttTXT(label_path, i)
-                            
-                            
+
+                            if datoStartCVS == datoStartTXT and datoSluttCVS == datoSluttTXT and cvsRedskap.cvsRedskap.godkjentLinerCSV(plt_path):
+                                print(datoStartCVS, datoStartTXT, datoSluttCVS, datoSluttTXT)
+                                transportationMode = txtRedskap.txtRedskap.hentMode(label_path, i)
+                                
+                                actQuery = """INSERT INTO Activity VALUES ('%s', %s, %s, %s, %s)
+                                       """
+                                
+                                self.cursor.execute(actQuery % (counterID, actId, transportationMode, datoStartCVS, datoSluttCVS))
 
 
 
 
-                        print("yeet")
-                    else:
-                        print("yeet")
+
+                        #print("yeet")
+                    #else:
+                        print("else")
 
 
 
