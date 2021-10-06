@@ -32,6 +32,5 @@ class txtRedskap:
     def labelAntall(path):
             return  sum(1 for line in open(path)) -1
 
-    print(hentMode("labels.txt",2))
 
 
