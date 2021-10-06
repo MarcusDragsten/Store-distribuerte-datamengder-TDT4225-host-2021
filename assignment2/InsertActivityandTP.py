@@ -2,7 +2,7 @@ from DbConnector import DbConnector
 from tabulate import tabulate
 import os
 import txtRedskap
-import cvsRedskap
+import csvRedskap
 
 class InsertActivity:
 
@@ -25,9 +25,9 @@ class InsertActivity:
 
             if path[len(path)-3:].isnumeric():
                 userID = path[len(path)-3:]
+                print(userID)
 
                 if "labels.txt" in files:
-                    print(userID)
                     label_path = path + "/labels.txt"
                     #print(label_path)
             
@@ -38,14 +38,13 @@ class InsertActivity:
                     #print("Her går vi gjennom PLT-filer ---------------------------------------------------------------------------")
                     #print(plt)
                     plt_path = path + "/" + plt
-                    innholdPLT = cvsRedskap.cvsRedskap.innholdPLT(plt_path)
+                    datoStartCVS = csvRedskap.csvRedskap.datoStartCSV(plt_path)
+                    datoSluttCVS = csvRedskap.csvRedskap.datoSluttCSV(plt_path)
                     #print("Her printer vi PLT-Pathen",plt_path)
                     #print(plt_path)
 
                     if len(label_path) > 1:
                         labelAntall = txtRedskap.txtRedskap.labelAntall(label_path)
-                        datoStartCVS = cvsRedskap.cvsRedskap.datoStartCSV(plt_path)
-                        datoSluttCVS = cvsRedskap.cvsRedskap.datoSluttCSV(plt_path)
                         #print(labelAntall)
                         #print("Her går vi gjennom alle labels")
                         for i in range(labelAntall):
@@ -57,50 +56,44 @@ class InsertActivity:
                             # if datoStartCVS == datoStartTXT:
                             #     print("teet")
 
-                            if datoStartCVS == datoStartTXT and datoSluttCVS == datoSluttTXT and cvsRedskap.cvsRedskap.godkjentLinerCSV(plt_path):
+                            if datoStartCVS == datoStartTXT and datoSluttCVS == datoSluttTXT and csvRedskap.csvRedskap.godkjentLinjerCSV(plt_path):
                                 print(datoStartCVS, datoStartTXT, datoSluttCVS, datoSluttTXT)
                                 transportationMode = txtRedskap.txtRedskap.hentMode(label_path, i)
                                 print(transportationMode)
                                 
                                 actQuery = """INSERT INTO Activity VALUES (%s, '%s', '%s', '%s', '%s')
                                        """
-
-                                for tp in 
-
-                                tpQuery = """INSERT INTO TrackPoint VALUES (%s, %s, '%s', '%s', %s, '%s')
-                                       """
-
                                 self.cursor.execute(actQuery % (activityID, userID, transportationMode, datoStartCVS, datoSluttCVS))
-                                self.cursor.execute(tpQuery % (trackPointID, activityID, innholdPLT[0], innholdPLT[1], innholdPLT[2], innholdPLT[3]))
+
+                                for tp in range(csvRedskap.csvRedskap.linjerCSV(plt_path)):
+                                    innholdPLT = csvRedskap.csvRedskap.innholdPLT(plt_path, tp)
+
+                                    tpQuery = """INSERT INTO TrackPoint VALUES (%s, %s, '%s', '%s', %s, '%s')
+                                        """
+                                    self.cursor.execute(tpQuery % (trackPointID, activityID, innholdPLT[0], innholdPLT[1], innholdPLT[2], innholdPLT[3]))
+                                    trackPointID+=1
+
                                 self.db_connection.commit()
 
                                 activityID+=1
-                                trackPointID+=1
+                    
+                    else:
+                        if csvRedskap.csvRedskap.godkjentLinjerCSV(plt_path):
+                                actQuery = """INSERT INTO Activity VALUES (%s, '%s', NULL, '%s', '%s')
+                                       """
+                                self.cursor.execute(actQuery % (activityID, userID, datoStartCVS, datoSluttCVS))
+
+                                for tp in range(csvRedskap.csvRedskap.linjerCSV(plt_path)):
+                                    innholdPLT = csvRedskap.csvRedskap.innholdPLT(plt_path, tp)
+
+                                    tpQuery = """INSERT INTO TrackPoint VALUES (%s, %s, '%s', '%s', %s, '%s')
+                                            """
+                                    self.cursor.execute(tpQuery % (trackPointID, activityID, innholdPLT[0], innholdPLT[1], innholdPLT[2], innholdPLT[3]))
+                                    trackPointID+=1
+                                activityID+=1
+                                self.db_connection.commit()
 
                 label_path = ""
-
-                        #print("yeet")
-                    #else:
-                        #print("else")
-
-
-
-
-                # else:
-                #     print("yeet")
-
-
-                # if "labels.txt" in files:
-                #     print("true", actId)
-                # else:
-                #     print("yeet") 
-
-
-            #print(path[len(path)-3:])
-
-        #query = """INSERT INTO Activity VALUES ('%s', %s, %s, %s, %s)
-        #        """
-        #self.cursor.execute(query % ())
 
 
 def main():
