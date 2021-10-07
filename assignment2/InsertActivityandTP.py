@@ -53,6 +53,7 @@ class InsertActivityandTP:
                                 actQuery = """INSERT INTO Activity VALUES (%s, '%s', '%s', '%s', '%s')
                                         """
                                 self.cursor.execute(actQuery % (activityID, userID, transportationMode, datoStartCVS, datoSluttCVS))
+                                self.db_connection.commit()
 
                                 # Looping through the trackpoints for each activity, and adds them to the DB
                                 for tp in range(csvRedskap.csvRedskap.linjerCSV(plt_path)):
@@ -62,6 +63,7 @@ class InsertActivityandTP:
                                     tpQuery = """INSERT INTO TrackPoint VALUES (%s, %s, '%s', '%s', %s, '%s')
                                             """
                                     self.cursor.execute(tpQuery % (trackPointID, activityID, innholdPLT[0], innholdPLT[1], innholdPLT[2], innholdPLT[3]))
+                                    self.db_connection.commit()
                                     trackPointID+=1
 
                                 activityID+=1
@@ -74,6 +76,7 @@ class InsertActivityandTP:
                                 actQuery = """INSERT INTO Activity VALUES (%s, '%s', NULL, '%s', '%s')
                                         """
                                 self.cursor.execute(actQuery % (activityID, userID, datoStartCVS, datoSluttCVS))
+                                self.db_connection.commit()
 
                                 for tp in range(csvRedskap.csvRedskap.linjerCSV(plt_path)):
                                     innholdPLT = csvRedskap.csvRedskap.innholdPLT(plt_path, tp)
@@ -81,11 +84,12 @@ class InsertActivityandTP:
                                     tpQuery = """INSERT INTO TrackPoint VALUES (%s, %s, '%s', '%s', %s, '%s')
                                             """
                                     self.cursor.execute(tpQuery % (trackPointID, activityID, innholdPLT[0], innholdPLT[1], innholdPLT[2], innholdPLT[3]))
+                                    self.db_connection.commit()
                                     trackPointID+=1
                                 activityID+=1
                 
                 label_path = ""
-        self.db_connection.commit()
+        #self.db_connection.commit()
 
 def main():
     program = None
