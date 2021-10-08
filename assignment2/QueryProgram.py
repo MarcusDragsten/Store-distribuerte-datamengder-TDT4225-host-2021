@@ -60,7 +60,6 @@ class QueryProgram:
             FROM (( User
                 INNER JOIN Activity ON User.id = Activity.user_id)
                 INNER JOIN TrackPoint ON Activity.id = TrackPoint.activity_id)
-            WHERE User.id = '003' or User.id = '004' or User.id = '006' or User.id = '007'
             ORDER BY TrackPoint.date_time ASC;"""
         print('\n\n Solution to query 6:\n')
         self.cursor.execute(query)
@@ -82,6 +81,7 @@ class QueryProgram:
                     if (rows[i][0], rows[j][0]) not in matched_users:
                         if (rows[j][0], rows[i][0]) not in matched_users:
                             matched_users.append((rows[i][0], rows[j][0]))
+                            print(matched_users)
 
                 i+=1
                 current_time = rows[i][3]
@@ -166,14 +166,12 @@ class QueryProgram:
 
 # Find all users who have invalid activities, and the number of invalid activities per user.
     def query12(self):
-        self.cursor.execute("SET @user = ''")
-        self.cursor.execute("SET @act = ''")
-        self.cursor.execute("SET @time = '0000-00-00 00:00:00'")
-        queries = ["""SELECT tbl.user, COUNT(DISTINCT tbl.curr_act) as numberOfInvalidActivities FROM 
-        (SELECT @time prev_time, @time:=date_time curr_time, @user prev_user, @user:=user_id user, @activity prev_act, @activity:=tp.activity_id curr_act 
-        FROM TrackPoint as tp LEFT JOIN Activity as act ON act.id = tp.activity_id) as tbl 
-        WHERE tbl.prev_act = tbl.curr_act AND tbl.user = tbl.prev_user 
-        AND TIME_TO_SEC(TIMEDIFF(tbl.curr_time, tbl.prev_time)) > 3000 GROUP BY user"""]
+        queries = ["""SELECT lag_table.user_id, COUNT(DISTINCT lag_table.activity_id) as invalid_activities
+        FROM(SELECT activity_id, user_id, date_time, LAG(date_time, 1) OVER (PARTITION BY tp.activity_id) as prev_time 
+        FROM TrackPoint as tp 
+        JOIN Activity as act ON act.id = tp.activity_id) as lag_table
+        WHERE TIME_TO_SEC(TIMEDIFF(lag_table.date_time, lag_table.prev_time)) > 300
+        GROUP BY lag_table.user_id"""]
         print('\n\n Solution to query 12:\n')
         self.execute_query(queries)
 
@@ -186,8 +184,8 @@ def main():
         #program.query2()
         #program.query3()
         #program.query4()
-        program.query5()
-        #program.query6()
+        #program.query5()
+        program.query6()
         #program.query7()
         #program.query8()
         #program.query9()

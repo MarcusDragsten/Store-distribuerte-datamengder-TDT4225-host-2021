@@ -44,10 +44,3 @@ class csvRedskap:
           s = enLinje.split(",")
           aResult = (s[0], s[1], s[3], s[5]+" "+ s[6][:8])
           return aResult
-
-
-          
-
-
-
-
