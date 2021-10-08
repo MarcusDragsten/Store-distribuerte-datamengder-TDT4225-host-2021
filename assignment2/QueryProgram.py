@@ -48,7 +48,7 @@ class QueryProgram:
 
 # Find activities that are registered multiple times. You should find the query even if you get zero results
     def query5(self):
-        queries = [""]
+        queries = ["SELECT user_id AS Users, transportation_mode AS Transportation, start_date_time AS 'Start date', end_date_time AS 'End date', COUNT(*) AS 'Number of lines that are equal' FROM Activity GROUP BY  user_id,transportation_mode, start_date_time, end_date_time HAVING COUNT(*)>1;"]
         print('\n\n Solution to query 5:\n')
         self.execute_query(queries)
 
@@ -182,18 +182,18 @@ def main():
     program = None
     try:
         program = QueryProgram()
-        # program.query1()
-        # program.query2()
-        # program.query3()
-        # program.query4()
-        #program.query5()
-        # program.query6()
-        # program.query7()
-        # program.query8()
-        program.query9()
-        # program.query10()
-        # program.query11()
-        # program.query12()
+        #program.query1()
+        #program.query2()
+        #program.query3()
+        #program.query4()
+        program.query5()
+        #program.query6()
+        #program.query7()
+        #program.query8()
+        #program.query9()
+        #program.query10()
+        #program.query11()
+        #program.query12()
 
     except Exception as e:
         print("ERROR: Failed to use database:", e)
