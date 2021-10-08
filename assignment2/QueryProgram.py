@@ -105,9 +105,35 @@ class QueryProgram:
     # and how many recorded hours do they have? Do they have more hours recorded than the user with the second most
     # activities?
     def query9(self):
-        queries = [""]
-        print('\n\n Solution to query 9:\n')
-        self.execute_query(queries)
+        query_a = """SELECT YEAR(start_date_time) as year, MONTH(start_date_time) as month, COUNT(*) as count 
+        FROM Activity GROUP BY year, month ORDER BY count DESC LIMIT 1"""
+        print('\n\n Solution to query 9 a:\n')
+        self.cursor.execute(query_a)
+        result_query_a = self.cursor.fetchall()
+        print(tabulate(result_query_a, headers=self.cursor.column_names))
+
+        top_year = result_query_a[0][0]
+        top_month = result_query_a[0][1]
+
+        query_b1 = """SELECT user_id, COUNT(*) as noa FROM Activity 
+        WHERE MONTH(start_date_time) = 11 AND YEAR(start_date_time) = 2008 
+        GROUP BY user_id ORDER BY noa DESC LIMIT 2"""
+        print('\n\n Solution to query 9 b part 1:\n')
+        self.cursor.execute(query_b1, {'m': top_month, 'y': top_year})
+        result_query_b1 = self.cursor.fetchall()
+        print(tabulate(result_query_b1, headers=self.cursor.column_names))
+
+        most_activities = result_query_b1[0][0]
+        second_most_activities = result_query_b1[1][0]
+
+        query_b2 = """SELECT user_id, ROUND(SUM(TIMESTAMPDIFF(SECOND,start_date_time,end_date_time)/3600),2) as hours 
+        FROM Activity 
+        WHERE MONTH(start_date_time) = %(m)s AND YEAR(start_date_time) = %(y)s AND (user_id = %(ma)s OR user_id = %(sma)s)
+        GROUP BY user_id ORDER BY hours DESC"""
+        print('\n\n Solution to query 9 b part 2:\n')
+        self.cursor.execute(query_b2, {'m':top_month, 'y':top_year, 'ma':most_activities, 'sma':second_most_activities})
+        result_query_b2 = self.cursor.fetchall()
+        print(tabulate(result_query_b2, headers=self.cursor.column_names))
 
 # Find the total distance (in km) walked in 2008, by user with id=112.
     def query10(self):
@@ -156,18 +182,18 @@ def main():
     program = None
     try:
         program = QueryProgram()
-        program.query1()
-        program.query2()
-        program.query3()
-        program.query4()
+        # program.query1()
+        # program.query2()
+        # program.query3()
+        # program.query4()
         #program.query5()
-        program.query6()
-        program.query7()
-        program.query8()
+        # program.query6()
+        # program.query7()
+        # program.query8()
         program.query9()
-        program.query10()
-        program.query11()
-        program.query12()
+        # program.query10()
+        # program.query11()
+        # program.query12()
 
     except Exception as e:
         print("ERROR: Failed to use database:", e)
