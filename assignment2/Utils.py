@@ -1,5 +1,5 @@
 #This class is for txt files
-class txtUtils:
+class txtUtils: 
     
     #Get the start date from the index i
     def dateStart(path, i):
@@ -79,7 +79,7 @@ class pltUtils:
             return sum(1 for line in open(path))-6
 
     #Returns a tuple with the values from the line i
-    def fileContents(path, i):
+    def fileContent(path, i):
             i+=6
             with open (path) as csv_file:
                 oneLine = csv_file.readlines()[i]
