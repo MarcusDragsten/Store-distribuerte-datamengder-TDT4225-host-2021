@@ -36,7 +36,6 @@ class CreateTables:
                     lat DOUBLE,
                     lon DOUBLE,
                     altitude INT,
-                    date_days DOUBLE,
                     date_time DATETIME,
                     FOREIGN KEY (activity_id) REFERENCES Activity(id))
                 """

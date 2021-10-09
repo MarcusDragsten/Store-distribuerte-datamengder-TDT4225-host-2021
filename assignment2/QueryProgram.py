@@ -81,7 +81,7 @@ class QueryProgram:
                     if (rows[i][0], rows[j][0]) not in matched_users:
                         if (rows[j][0], rows[i][0]) not in matched_users:
                             matched_users.append((rows[i][0], rows[j][0]))
-                            print(matched_users)
+                            print((rows[i][0], rows[j][0]))
 
                 i+=1
                 current_time = rows[i][3]
@@ -185,12 +185,12 @@ def main():
         #program.query3()
         #program.query4()
         #program.query5()
-        program.query6()
+        #program.query6()
         #program.query7()
         #program.query8()
         #program.query9()
         #program.query10()
-        #program.query11()
+        program.query11()
         #program.query12()
 
     except Exception as e:
