@@ -14,27 +14,28 @@ class ExampleProgram:
         print('Created collection: ', collection)
 
     def insert_documents(self, collection_name):
+        hei = "hfhfhfhfhhf"
         docs = [
+            # {
+            #     "_id": 3,
+            #     "name": "Bobby",
+            #     "courses": 
+            #         [
+            #         {'code':'TDT4225', 'name': ' Very Large, Distributed Data Volumes'},
+            #         {'code':'BOI1001', 'name': ' How to become a boi or boierinnaa'}
+            #         ] 
+            # },
+            # {
+            #     "_id": 2,
+            #     "name": "Bobby",
+            #     "courses": 
+            #         [
+            #         {'code':'TDT02', 'name': ' Advanced, Distributed Systems'},
+            #         ] 
+            # },
             {
-                "_id": 1,
-                "name": "Bobby",
-                "courses": 
-                    [
-                    {'code':'TDT4225', 'name': ' Very Large, Distributed Data Volumes'},
-                    {'code':'BOI1001', 'name': ' How to become a boi or boierinnaa'}
-                    ] 
-            },
-            {
-                "_id": 2,
-                "name": "Bobby",
-                "courses": 
-                    [
-                    {'code':'TDT02', 'name': ' Advanced, Distributed Systems'},
-                    ] 
-            },
-            {
-                "_id": 3,
-                "name": "Bobby",
+                "_id": 5,
+                "name": hei,
             }
         ]  
         collection = self.db[collection_name]
@@ -62,6 +63,7 @@ def main():
     program = None
     try:
         program = ExampleProgram()
+        program.drop_coll(collection_name="Person")
         program.create_coll(collection_name="Person")
         program.show_coll()
         program.insert_documents(collection_name="Person")
