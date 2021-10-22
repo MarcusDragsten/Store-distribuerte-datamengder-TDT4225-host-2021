@@ -1,3 +1,5 @@
+import math
+
 #This class is for txt files
 class txtUtils: 
     

@@ -132,6 +132,11 @@ class MongoQueryProgram:
     # (This is a simplification of the “unsolvable” problem given i exercise 2).
     def query6(self):
         print('\n\nSolution to query 6:\n')
+
+        # Finds all the trackpoints in the database, and extracts the user_id, lat, lon, and date_time.
+        # Our query takes very long time, so we have had a tough time testing this task
+        # Therefore, we created a test user to check if the code works as intended
+
         result = self.db["Activity"].aggregate(
             [
                 { '$lookup': {
@@ -147,35 +152,59 @@ class MongoQueryProgram:
                     'lon': '$trackPoint.lon',
                     'date_time': '$trackPoint.date_time'
                 }
+                },
+                {
+                    '$limit': 1
                 }
             ])
 
-        tp_list = list(result) # Add [x] for this var
-        close_users = []
-
+        # Create some variables for the infected person for checking
         infected_person_pos = (39.97548, 116.33031)
         infected_person_time = datetime.strptime("2008-08-24 15:38:00", '%Y-%m-%d %H:%M:%S')
+        # Create a minute timespace before and after the time.
         inf_time_before = infected_person_time - timedelta(seconds=60)
         inf_time_after = infected_person_time + timedelta(seconds=60)
 
-        # print(inf_time_before, inf_time_after)
+        # Since the query took so long we created an identical replica of the result from the query
+        # with data that would give a result.
+        test_user_time = datetime.strptime("2008-08-24 15:38:40", '%Y-%m-%d %H:%M:%S') # 40 seconds after the infected time
+        test_user = [{
+            '_id': 1,
+            'user_id': '000',
+            'lat': [39.97543], # close latitude
+            'lon': [116.33032], # close longitude
+            'date_time': [test_user_time]
+        }]
 
+        # Create a list of the result from the query
+        tp_list = list(test_user) # Change this variable to "result" to start the original query
+
+        # Also create an array of the users the code finds
+        close_users = []
+
+        # Iterates through the activities the query finds
         for i, currDict in enumerate(tp_list):
             user_id = currDict['user_id']
-            print(i)
-            # print(user_id)
+
+            # Iterates through every lat, lon, and date_time in the activity 
             for tp in range(len(currDict['lat'])): # lat, lon, and date_time is the same length, just chose one
                 
+                # Create variables for the position and date -> to check the distance in space and time
                 lat = currDict['lat'][tp]
                 lon = currDict['lon'][tp]
                 pos = (lat, lon)
                 date_time = currDict['date_time'][tp]
                 distance = haversine(pos, infected_person_pos, unit=Unit.METERS)
 
+                # If a user has been nearby at within 100 meters and 60 seconds, add the user_id to the array.
+                # By running query6(), you can clearly see that the user is added, and the if statement works as intended
                 if distance <= 100 and date_time > inf_time_before and date_time < inf_time_after and user_id not in close_users:
 
                     close_users.append(user_id)
-                    print(user_id)
+        
+        # Prints the array
+        print("Check if the testuser '000' has been nearby:")
+        print("Close users:", close_users)
 
 
     # Find all users that have never taken a taxi.

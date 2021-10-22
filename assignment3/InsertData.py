@@ -3,6 +3,7 @@ from DbConnector import DbConnector
 import os
 import Utils
 from datetime import datetime
+import math
 
 class InsertData:
 
@@ -18,7 +19,7 @@ class InsertData:
         trackPointID = 1
 
         #Remember to change the path if the code is to be tested.
-        for (path, dirs, files) in os.walk("C:/Users/Yoga/dataset/Data", topdown=True):
+        for (path, dirs, files) in os.walk("C:/Users/Marcus/dataset/Data", topdown=True):
 
             # Checks if the path ends with the user-number-folder > Use it as UserID
             if path[len(path)-3:].isnumeric():
@@ -61,7 +62,7 @@ class InsertData:
                                             "_id": trackPointID,
                                             "lat": float(tpContent[0][0]),
                                             "lon": float(tpContent[0][1]),
-                                            "altitude": int(tpContent[0][2]),
+                                            "altitude": int(float(tpContent[0][2])),
                                             "date_time": datetime.strptime(tpContent[0][3], '%Y-%m-%d %H:%M:%S'),
                                             "activity_id": activityID
                                         }
@@ -114,7 +115,7 @@ class InsertData:
                                         "_id": trackPointID,
                                         "lat": float(tpContent[0][0]),
                                         "lon": float(tpContent[0][1]),
-                                        "altitude": int(tpContent[0][2]),
+                                        "altitude": int(float(tpContent[0][2])),
                                         "date_time": datetime.strptime(tpContent[0][3], '%Y-%m-%d %H:%M:%S'),
                                         "activity_id": activityID
                                     }
@@ -163,6 +164,7 @@ class InsertData:
                 trackPointIDs = []
 
 def main():
+
     program = None
     try:
         program = InsertData()
