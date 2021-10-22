@@ -1,9 +1,7 @@
-from pymongo import collection
 from DbConnector import DbConnector
 import os
 import Utils
 from datetime import datetime
-import math
 
 class InsertData:
 

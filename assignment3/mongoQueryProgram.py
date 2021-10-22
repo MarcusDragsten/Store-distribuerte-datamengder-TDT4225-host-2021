@@ -1,12 +1,8 @@
 from datetime import datetime, timedelta
 from pprint import pprint
-
-from bson import SON
 from haversine import haversine, Unit
 from tabulate import tabulate
-
 from DbConnector import DbConnector
-
 
 class MongoQueryProgram:
 
